@@ -1,8 +1,8 @@
-import express from "express";
-import dotenv from "dotenv";
+import express from "../node_modules_old/@types/express";
+import dotenv from "../node_modules_old/dotenv/lib/main";
 dotenv.config();
-import bodyParser from "body-parser";
-import helmet from "helmet";
+import bodyParser from "../node_modules_old/@types/body-parser";
+import helmet from "../node_modules_old/helmet/index.cjs";
 import AppRoute from "./routes";
 import log from "./utils/debugger";
 

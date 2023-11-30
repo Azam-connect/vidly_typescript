@@ -1,4 +1,4 @@
-import express from "express";
+import express from "../../node_modules_old/@types/express";
 
 import GenreRoute from "./v1/genre/genreRoute";
 import CustomerRoute from "./v1/customer/customerRoute";

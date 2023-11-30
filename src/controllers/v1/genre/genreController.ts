@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "../../../../node_modules_old/@types/express";
 import { GenreService } from "../../../services";
 class GenreContoller {
   async getGenres(req: Request, res: Response, next: NextFunction) {
