@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from "../../../../node_modules_old/@types/express";
+import { Request, Response, NextFunction } from "express";
 import { Customer } from "../../../models";
-import Joi from "../../../../node_modules_old/joi/lib";
+import Joi from "joi";
 class CustomerService {
   async getCustomers(req: Request, res: Response, next: NextFunction) {
     try {

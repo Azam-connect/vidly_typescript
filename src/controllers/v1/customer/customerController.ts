@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "../../../../node_modules_old/@types/express";
+import { NextFunction, Request, Response } from "express";
 import { CustomerService } from "../../../services";
 
 class CustomerController {

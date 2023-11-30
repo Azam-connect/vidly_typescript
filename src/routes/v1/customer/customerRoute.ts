@@ -1,4 +1,4 @@
-import express from "../../../../node_modules_old/@types/express";
+import express from "express";
 import { CustomerController } from "../../../controllers";
 const router = express.Router();
 
