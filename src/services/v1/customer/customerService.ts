@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { Customer } from "../../../models";
 import Joi from "joi";
+import log from "../../../utils/debugger";
 class CustomerService {
   async getCustomers(req: Request, res: Response, next: NextFunction) {
     try {
@@ -74,7 +75,7 @@ class CustomerService {
   async modifyCustomer(req: Request, res: Response, next: NextFunction) {
     try {
       const { value: paramValue, error: paramError } = Joi.object({
-        id: Joi.string().min(24).max(24),
+        id: Joi.string().min(24).max(24).required(),
       }).validate(req.params);
 
       if (paramError) {
@@ -99,6 +100,19 @@ class CustomerService {
           validationError: validationErrorMessages,
         });
       }
+
+      const { name, phone, isGold } = value;
+      const foundCustomer = await Customer.findByIdAndUpdate(
+        { _id: paramValue.id },
+        { name, phone, isGold },
+        { new: true }
+      );
+      if (!foundCustomer) {
+        return res
+          .status(400)
+          .json({ errMsg: true, message: "Customer not found" });
+      }
+      return res.status(200).json({ errMsg: false, result: foundCustomer });
     } catch (error) {
       return res
         .status(500)
@@ -109,7 +123,7 @@ class CustomerService {
   async removeCustomer(req: Request, res: Response, next: NextFunction) {
     try {
       const { value: paramValue, error: paramError } = Joi.object({
-        id: Joi.string().min(24).max(24),
+        id: Joi.string().min(24).max(24).required(),
       }).validate(req.params);
     } catch (error) {
       return res

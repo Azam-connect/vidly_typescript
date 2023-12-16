@@ -21,6 +21,16 @@ class CustomerController {
         .json({ errMsg: true, message: "Something went wrong", error });
     }
   }
+
+  async modifyCustomer(req: Request, res: Response, next: NextFunction) {
+    try {
+      await CustomerService.modifyCustomer(req, res, next);
+    } catch (error) {
+      return res
+        .status(400)
+        .json({ errMsg: true, message: "Something went wrong", error });
+    }
+  }
 }
 
 export default new CustomerController();
