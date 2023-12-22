@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { Customer } from "../../../models";
 import Joi from "joi";
 import log from "../../../utils/debugger";
+const ObjectID = require("mongodb").ObjectId;
 class CustomerService {
   async getCustomers(req: Request, res: Response, next: NextFunction) {
     try {
@@ -125,6 +126,34 @@ class CustomerService {
       const { value: paramValue, error: paramError } = Joi.object({
         id: Joi.string().min(24).max(24).required(),
       }).validate(req.params);
+      if (paramError) {
+        const validationErrorMessages = paramError.details.map(
+          (e) => e.message
+        );
+        return res.status(400).json({
+          errMsg: true,
+          validationError: validationErrorMessages,
+        });
+      }
+      const { id } = paramValue;
+      if (ObjectID.isValid(id)) {
+        const foundCustomer = await Customer.findByIdAndDelete(id);
+        if (!foundCustomer) {
+          return res.status(400).json({
+            errMsg: true,
+            message: "Customer not found",
+          });
+        } else {
+          return res
+            .status(200)
+            .json({ errMsg: false, message: "Customer Removed" });
+        }
+      } else {
+        return res.status(400).json({
+          errMsg: true,
+          message: "Invalid ID",
+        });
+      }
     } catch (error) {
       return res
         .status(500)
