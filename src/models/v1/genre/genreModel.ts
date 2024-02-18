@@ -10,4 +10,4 @@ const genreSchema = new mongoose.Schema(
 
 const Genre = VidlyDB.model("genres", genreSchema, "Genres");
 
-export { Genre };
+export { Genre, genreSchema };
